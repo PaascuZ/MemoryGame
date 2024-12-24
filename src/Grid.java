@@ -14,12 +14,15 @@ public class Grid {
          * As each character is used for two cards, we have 186 possible cards.
          * Sqrt(186) = 13.64, so maximum square grid is 13 x 13.
          */
-        if (height <= 0 || width <= 0 || height * width > Constants.MAX_NR_CELLS || height * width % 2 != 0) {
+        if (height <= 0 || width <= 0 || height * width > Constants.MAX_NR_CELLS) {
             height = 13;
             width = 13;
         }
+        this.grid=new Card[height][width];
+        numberOfSpecialCards();
+        calculateBonusMalus(this.specials);
 
-        // TO BE COMPLETED
+
     }
 
     /**
@@ -48,7 +51,7 @@ public class Grid {
      * Method: calculateBonusMalus
      * Description: algorithm that calculates how many bonus and malus cards to put inside the grid
      */
-    void calculateBonusMalus(){
+    void calculateBonusMalus(int specials){
         int temp=specials;
 
         if(temp==1){
@@ -62,7 +65,7 @@ public class Grid {
             if(temp>0){
                 BonusMalus[1]+=1;
                 temp--;
-                calculateBonusMalus();
+                calculateBonusMalus(temp);
             }
         }
         return;
@@ -72,6 +75,9 @@ public class Grid {
      * Method: loadGrid
      * Description: method that loads the symbols inside the grid, starts by loading the specials first, and then the rest
      */
+
+     
+    
     void loadGrid(){
         //DA IMPLEMENTARE
     }
