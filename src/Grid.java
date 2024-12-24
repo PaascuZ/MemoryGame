@@ -72,12 +72,26 @@ public class Grid {
     }
 
     /**
-     * Method: loadGrid
-     * Description: method that loads the symbols inside the grid, starts by loading the specials first, and then the rest
+     * Method: loadSpecials
+     * Description: method that loads the special cards inside the grid
      */
+    void loadSpecials(){
+        int w,h;
+        for(int i=0;i<this.specials;i++){
+            h= (int) (Math.random()*this.grid.length);
+            w= (int) (Math.random()*this.grid[0].length);
+            if(grid[h][w].symbol!=' '){
+                i--;
+            }else{
 
-     
-    
+            }
+        }
+    }
+
+    /**
+     * Method: loadGrid
+     * Description: method that loads the remaining cards
+     */
     void loadGrid(){
         //DA IMPLEMENTARE
     }
