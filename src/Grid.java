@@ -1,7 +1,8 @@
-
 public class Grid {
 
     Card[][] grid;
+    int[] BonusMalus={0,0};//Contains how many bonus and malus cards are in the grid, index 0 -> Bonus, index 1 -> Malus
+    int specials;//Contains number of special cards present in this grid
 
     Grid(int height, int width) {
         /*
@@ -19,6 +20,60 @@ public class Grid {
         }
 
         // TO BE COMPLETED
+    }
+
+    /**
+     * Method: numberOfSpecialCards
+     * Description: algorithm that calculates how many special cards to insert in the Grid, based on width and lenght
+     */
+    void numberOfSpecialCards(){
+        int cells=grid.length*grid[0].length, percentage=15;//Definire percentage come costante(?)
+
+        if(cells%2==0){
+            if((int)(cells/100*percentage)%2==0){
+                specials= (int) cells/100*percentage;
+            }else{
+                specials= (int) cells/100*percentage-1;
+            }
+        }else{
+            if((int)(cells/100*percentage)%2==0){
+                specials= (int) cells/100*percentage+1;
+            }else{
+                specials= (int) cells/100*percentage;
+            }
+        }
+    } 
+
+    /**
+     * Method: calculateBonusMalus
+     * Description: algorithm that calculates how many bonus and malus cards to put inside the grid
+     */
+    void calculateBonusMalus(){
+        int temp=specials;
+
+        if(temp==1){
+            BonusMalus[1]+=1;
+            return;
+        }
+
+        if(temp/2>0){
+            BonusMalus[0]+=2;
+            temp-=2;
+            if(temp>0){
+                BonusMalus[1]+=1;
+                temp--;
+                calculateBonusMalus();
+            }
+        }
+        return;
+    }
+
+    /**
+     * Method: loadGrid
+     * Description: method that loads the symbols inside the grid, starts by loading the specials first, and then the rest
+     */
+    void loadGrid(){
+        //DA IMPLEMENTARE
     }
 
     void print() {
@@ -59,4 +114,5 @@ public class Grid {
         }
         System.out.println();
     }
+
 }
