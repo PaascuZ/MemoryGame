@@ -3,6 +3,7 @@ public class Grid {
     Card[][] grid;
     int[] BonusMalus={0,0};//Contains how many bonus and malus cards are in the grid, index 0 -> Bonus, index 1 -> Malus
     int specials;//Contains number of special cards present in this grid
+    int emptyCells;
 
     Grid(int height, int width) {
         /*
@@ -19,10 +20,12 @@ public class Grid {
             width = 13;
         }
         this.grid=new Card[height][width];
+        this.emptyCells=(height*width);
+        
         numberOfSpecialCards();
         calculateBonusMalus(this.specials);
-
-
+        loadSpecials();
+        loadGrid();   
     }
 
     /**
@@ -30,19 +33,19 @@ public class Grid {
      * Description: algorithm that calculates how many special cards to insert in the Grid, based on width and lenght
      */
     void numberOfSpecialCards(){
-        int cells=grid.length*grid[0].length, percentage=15;//Definire percentage come costante(?)
+        double cells=grid.length*grid[0].length, percentage=15;//Definire percentage come costante(?)
 
         if(cells%2==0){
             if((int)(cells/100*percentage)%2==0){
-                specials= (int) cells/100*percentage;
+                specials=(int) ((cells/100)*percentage);
             }else{
-                specials= (int) cells/100*percentage-1;
+                specials=(int) ((cells/100)*percentage)-1;
             }
         }else{
             if((int)(cells/100*percentage)%2==0){
-                specials= (int) cells/100*percentage+1;
+                specials=(int) ((cells/100)*percentage)+1;
             }else{
-                specials= (int) cells/100*percentage;
+                specials=(int) ((cells/100)*percentage);
             }
         }
     } 
@@ -76,16 +79,35 @@ public class Grid {
      * Description: method that loads the special cards inside the grid
      */
     void loadSpecials(){
-        int w,h;
-        for(int i=0;i<this.specials;i++){
-            h= (int) (Math.random()*this.grid.length);
-            w= (int) (Math.random()*this.grid[0].length);
-            if(grid[h][w].symbol!=' '){
-                i--;
-            }else{
+        Coordinate c=new Coordinate();
+        boolean full;
 
+        int start=33;
+        for(int j=0;j<BonusMalus[0];j++){
+            if(j%2==0&&j!=0){
+                start++;
             }
+            full=checkFullGrid(c);
+            if(full==false){
+                grid[c.row][c.col]= new Card((char)start, false, c, CardType.BONUS);
+                this.emptyCells--;
+            }else{
+                break;
+            }  
         }
+        
+        start=33;
+        for(int j=0;j<BonusMalus[1];j++){
+            full=checkFullGrid(c);
+            if(full==false){
+                grid[c.row][c.col]= new Card((char)start, false, c, CardType.MALUS);
+                start++;
+                this.emptyCells--;
+            }else{
+                break;
+            }  
+        }
+
     }
 
     /**
@@ -93,7 +115,35 @@ public class Grid {
      * Description: method that loads the remaining cards
      */
     void loadGrid(){
-        //DA IMPLEMENTARE
+        Coordinate c=new Coordinate();
+        boolean full;
+        int start=33,temp=emptyCells;
+        for(int j=0;j<temp;j++){
+            if( (j%2==0) && (j!=0) ){
+                start++;
+            }
+            full=checkFullGrid(c);
+            if(full==false){
+                grid[c.row][c.col]= new Card((char)start, false, c, CardType.NORMAL);
+                this.emptyCells--;
+            }else{
+                break;
+            }  
+        }
+    }
+
+    boolean checkFullGrid(Coordinate c){
+        
+        if(this.emptyCells==0){
+            return true;
+        }else{
+            do{
+                c.row= (int) (Math.random()*this.grid.length);
+                c.col= (int) (Math.random()*this.grid[0].length);            
+            }while(grid[c.row][c.col]!=null);
+            return false;
+        }       
+        
     }
 
     void print() {

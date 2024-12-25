@@ -27,14 +27,18 @@ public class MemoryTest {
         // ---------- GAME FLOW ----------
         // -------------------------------
 
-        // Print the menu to begin
-        gameUI.printMenu();
-        gameUI.scanner.nextLine(); // Once any key is pressed, the game begins
-        gameUI.clearScreen();
-        
-        players = gameUI.getNumberAndNamesPlayers();
+        //Istruzioni per provare riempimento tabella
+        Grid g= new Grid(7, 7);
+        g.print();
 
-        gameUI.closeScanner();
+        // Print the menu to begin
+        //gameUI.printMenu();
+        //gameUI.scanner.nextLine(); // Once any key is pressed, the game begins
+        //gameUI.clearScreen();
+        
+        //players = gameUI.getNumberAndNamesPlayers();
+
+        //gameUI.closeScanner();
         /*
          * Cliccare invio per iniziare:             FATTO
          * 1. Chiedere il numero di giocatori:      FATTO
