@@ -28,7 +28,7 @@ public class MemoryTest {
         // -------------------------------
 
         //Istruzioni per provare riempimento tabella
-        Grid g= new Grid(7, 7);
+        Grid g= new Grid(10, 10);
         g.print();
 
         // Print the menu to begin
