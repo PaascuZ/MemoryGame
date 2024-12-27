@@ -6,4 +6,9 @@ public class Game {
         this.players = players;
         this.grid = grid;
     }
+
+    void changeOrder(int i){
+        //DA IMPLEMENTARE
+
+    }
 }

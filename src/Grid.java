@@ -96,34 +96,27 @@ public class Grid {
      */
     void loadSpecials(){
         Coordinate c=new Coordinate();
-        boolean full;
 
         int start=34;
         for(int j=0;j<BonusMalus[0];j++){
             if( (j%2) == 0 && j != 0){//Changes character only after putting two of the same card inside the grid
                 start++;
             }
-            full=checkFullGrid(c);//checks if the grid is full
-            if(full == false){
-                grid[c.row][c.col] = new Card((char)start, false, c, CardType.BONUS,"GREEN");//Creates a card to insert inside the given coordinates 
-                this.emptyCells--;//diminuishes the remaining number of empty cells
-            }else{
-                break;
-            }  
+            returnPosition(c);//checks if the grid is full
+            grid[c.row][c.col] = new Card((char)start, false, c, CardType.BONUS,"GREEN");//Creates a card to insert inside the given coordinates 
+            this.emptyCells--;//diminuishes the remaining number of empty cells
+            
         }
         
         start=34;//restarts from first character
 
         //does same thing as above just for 1 card
         for(int j=0;j<BonusMalus[1];j++){
-            full=checkFullGrid(c);
-            if(full==false){
-                grid[c.row][c.col]= new Card((char)start, false, c, CardType.MALUS, "RED");
-                start++;
-                this.emptyCells--;
-            }else{
-                break;
-            }  
+            returnPosition(c);
+            grid[c.row][c.col]= new Card((char)start, false, c, CardType.MALUS, "RED");
+            start++;
+            this.emptyCells--;
+
         }
 
     }
@@ -134,7 +127,6 @@ public class Grid {
      */
     void loadGrid(){
         Coordinate c=new Coordinate();
-        boolean full;
         int start=34,temp=emptyCells,j=0;
 
         while(j<temp){//while there are still empty cells
@@ -144,36 +136,25 @@ public class Grid {
                 if( (j%2==0) && (j!=0) ){//changes color only after it has loaded two of the same card inside the grid
                     i++;    
                 }
-                full=checkFullGrid(c);//checks for a position in the grid if it is not full
-                if(full==false){
-                    grid[c.row][c.col]= new Card((char)start, false, c, CardType.NORMAL,i);
-                    this.emptyCells--;
-                }else{
-                    break;
-                }
+                returnPosition(c);//checks for a position in the grid if it is not full
+                
+                grid[c.row][c.col]= new Card((char)start, false, c, CardType.NORMAL,i);
+                
                 j++;//loaded cells
-            }while(j<temp&&i<18);
+            }while(j<temp && i<18);
             start++;//changes character
         }
     }
 
     /**
-     * Method: checkFullGrid
-     * Description: returns true if grid is full, returns false if not; also it modifies the 
-     * Coordinate object passed through reference so it can give a random position where to put the card
+     * Method: returnPosition
+     * Description: it modifies the Coordinate object passed through reference so it can give a random position where to put the card
      */
-    boolean checkFullGrid(Coordinate c){
-        
-        if(this.emptyCells==0){
-            return true;
-        }else{
-            do{
-                c.row= (int) (Math.random()*this.grid.length);
-                c.col= (int) (Math.random()*this.grid[0].length);            
-            }while(grid[c.row][c.col]!=null);
-            return false;
-        }       
-        
+    void returnPosition(Coordinate c){
+        do{
+            c.row= (int) (Math.random()*this.grid.length);
+            c.col= (int) (Math.random()*this.grid[0].length);            
+        }while(grid[c.row][c.col]!=null);
     }
     
     /**

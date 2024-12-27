@@ -39,11 +39,11 @@ enum Color {
 }
 
 enum Bonus{
-    //IMPLEMENTARE OPZIONI CARTE BONUS
+    ADD100,X2,SHOWGRID,JOLLY,BRINGTO0
 }
 
 enum Malus{
-    //IMPLEMENTARE OPZIONI CARTE MALUS
+    STOP,LOSEALL,CHANGEORDER,SUB100,DONATION
 }
 
 enum CardType {
@@ -57,6 +57,7 @@ public class Card {
     CardType cardType;
     Color color;
 
+    //Constructor used to create Bonus/Malus Cards
     Card(char symbol, boolean uncovered, Coordinate position, CardType cardType, String s){
         this.symbol = symbol;
         this.uncovered = uncovered;
@@ -65,6 +66,7 @@ public class Card {
         this.color=Color.valueOf(s);
     }
 
+    //Constructor used to create all other cards
     Card(char symbol, boolean uncovered, Coordinate position, CardType cardType, int i){
         this.symbol = symbol;
         this.uncovered = uncovered;
@@ -72,8 +74,6 @@ public class Card {
         this.cardType = cardType;
         this.color=Color.values()[i];
     }
-
-
 
     // ---------- METHODS ----------
     void print(){
