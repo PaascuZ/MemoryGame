@@ -81,4 +81,14 @@ public class Card {
         System.out.print(" "+this.symbol+" ");
         System.out.print(Color.RESET);
     }
+
+    void printInfo(){
+        System.out.println("Symbol: " + this.symbol);
+        System.out.println("Status: " + (this.uncovered ? "Uncovered" : "Covered"));
+        System.out.println("Coordinates:");
+        System.out.println(" > Col: " + this.position.col);
+        System.out.println(" > Row: " + this.position.row);
+        System.out.println("Type:   " + this.cardType);
+        System.out.println("Color:  " + this.color);
+    }
 }

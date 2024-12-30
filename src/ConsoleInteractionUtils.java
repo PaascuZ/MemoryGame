@@ -9,7 +9,7 @@ public class ConsoleInteractionUtils {
         int input = 0;
         boolean correctInput = false;
         while (!correctInput) {
-            System.out.println("Please enter a number between " + min + " and " + max + ": ");
+            System.out.print("Please enter a number between " + min + " and " + max + ": ");
             if (scanner.hasNextInt()) {
                 input = scanner.nextInt();
                 if (input < min || input > max)
@@ -55,15 +55,19 @@ public class ConsoleInteractionUtils {
         boolean isValidInputs = false;
         int maxWidth = 0;
 
+        /*
         String message = """
                 Insert the height of the grid such that:
                 > Height: [0, %d]
-                """.formatted(Constants.MAX_NR_CELLS);
+                """.formatted(Constants.MAX_NR_ROWS);
+        
 
         System.out.println(message);
+        */
+        
         // Check for height
         do {
-            System.out.println("Insert height");
+            System.out.println("INSERT HEIGHT");
             height = readIntegerInRange(1, Constants.MAX_NR_ROWS);
 
             // Get the max width of the grid
@@ -78,11 +82,15 @@ public class ConsoleInteractionUtils {
 
         } while (!isValidInputs);
 
+        // Clear screen
+        clearScreen();
+
         // Check for width
         do {
-            System.out.println("Insert width: ");
+            System.out.println("INSERT WIDTH");
             width = readIntegerInRange(1, maxWidth);
 
+            //modificare il isValidInputs
             isValidInputs = isValidGridDimensions(height, width);
 
             if (!isValidInputs) {
@@ -94,6 +102,7 @@ public class ConsoleInteractionUtils {
     }
 
     Coordinate getCoordinate(int gridHeight, int gridWidth) {
+        // DA RISCRIVERE PER LE NUOVE COORDINATE
         String message = """
                 Insert row and column of the coordinate such that:
                 > Row: [0, %d]
@@ -123,9 +132,11 @@ public class ConsoleInteractionUtils {
         Player[] players = new Player[numPlayers];
 
         for(int i = 0; i < numPlayers; i++){
-            System.out.println("Player " + (i+1) + " name");
+            players[i] = new Player(""); // new Player initialized
+            System.out.println("PLAYER " + (i+1) + " NAME");
             playerName = readStringAndEnsureIsNotEmptyOrWhiteSpaces();
             players[i].name = playerName;
+            clearScreen();
         }
 
         return players;

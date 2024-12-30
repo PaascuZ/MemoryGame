@@ -14,6 +14,8 @@ public class Player {
         }
         this.points = points < 0 ? 0 : points;
         this.nowPlaying = nowPlaying;
+        this.jolly = false;
+        this.stop = false;
     }
 
     // Second constructor, to insert only the name when preparing the game
@@ -25,6 +27,8 @@ public class Player {
         }
         this.points = 0;
         this.nowPlaying = false;
+        this.jolly = false;
+        this.stop = false;
     }
 
     //-------------------------------------------------------------------------------------------
@@ -80,6 +84,20 @@ public class Player {
 
     void stopOnce(){
         this.stop=true;
+    }
+
+    //-------------------------------------------------------------------------------------------
+    //                                    GENERAL METHODS
+    //-------------------------------------------------------------------------------------------
+    void print(){
+        System.out.println("Name:    " + this.name);
+        System.out.println("Points:  " + this.points);
+        System.out.println("--- STATUS ---");
+        System.out.println((this.nowPlaying ? "Playing" : "Not Playing"));
+        System.out.println("Jolly:   " + (this.jolly ? "Yes" : "No"));
+        System.out.println("Stopped: " + (this.stop ? "Yes" : "No"));
+        // sout to take some space
+        System.out.println();
     }
 
 }

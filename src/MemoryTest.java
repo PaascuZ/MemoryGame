@@ -19,31 +19,37 @@ public class MemoryTest {
     public static void main(String[] args) {
         // Objects init
         ConsoleInteractionUtils gameUI = new ConsoleInteractionUtils();
-        // Oggetto game 
         Player[] players;
+        Grid grid;
+
+        // vArs
+        int[] gDimension = new int[2];
 
 
         // -------------------------------
         // ---------- GAME FLOW ----------
         // -------------------------------
 
-        //Istruzioni per provare riempimento tabella
-        Grid g= new Grid(10, 10);
-        g.print();
-
+        // Clear the screen to begin
+        gameUI.clearScreen();
         // Print the menu to begin
-        //gameUI.printMenu();
-        //gameUI.scanner.nextLine(); // Once any key is pressed, the game begins
-        //gameUI.clearScreen();
+        gameUI.printMenu();
+        gameUI.scanner.nextLine(); // Once any key is pressed, the game begins
+        gameUI.clearScreen();
         
-        //players = gameUI.getNumberAndNamesPlayers();
+        // Ask for players
+        players = gameUI.getNumberAndNamesPlayers();
 
-        //gameUI.closeScanner();
-        /*
-         * Cliccare invio per iniziare:             FATTO
-         * 1. Chiedere il numero di giocatori:      FATTO
-         * 2. Chiedere i nomi dei giocatori:        ON GOING
-         * 3. Chiedere le dimensioni della griglia: DA INIZIARE
-         */
+        gameUI.clearScreen();
+
+        //Ask for grid dimension
+        gDimension = gameUI.getGridDimensions();
+        grid = new Grid(gDimension[0], gDimension[1]); 
+
+        gameUI.clearScreen();
+
+        grid.print();
+
+        gameUI.closeScanner();
     }
 }

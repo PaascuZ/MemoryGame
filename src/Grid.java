@@ -165,7 +165,7 @@ public class Grid {
         // Print indices for columns
         System.out.print("    "); // initial space for row indices
         for (int i = 0; i < grid[0].length; i++) {
-            System.out.printf(" %2d ", i);
+            System.out.printf(" %2d ", (i+1));
         }
         System.out.println();
 
@@ -179,7 +179,7 @@ public class Grid {
             System.out.println();
 
             // Print row index
-            System.out.printf(" %2d |", i);
+            System.out.print(" " + ((char)(i+65)) + " |");
 
             for (int j = 0; j < grid[i].length; j++) {
                 if (grid[i][j] != null) {
