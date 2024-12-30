@@ -82,4 +82,8 @@ public class Player {
         this.stop=true;
     }
 
+    void removeStop(){
+        this.stop=false;
+    }
+
 }

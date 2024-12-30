@@ -1,8 +1,8 @@
 enum Color {
     //Patters for BONUS/MALUS Cards and to reset output
     RESET("\033[0m"),   //Takes the output back to original settings
-    RED("\033[41m"),     // RED
-    GREEN("\033[42m"),   // GREEN
+    RED("\033[41m"),     // RED BACKGROUND
+    GREEN("\033[42m"),   // GREEN BACKGROUND
 
     //Usable patterns for non special cards start from here (index=3)
     //UNDERLINED
@@ -31,7 +31,6 @@ enum Color {
         this.code = code;
     }
 
-    @Override
     public String toString() {
         return code;
     }
@@ -56,6 +55,8 @@ public class Card {
     Coordinate position;
     CardType cardType;
     Color color;
+    boolean Bonus;
+    boolean Malus;
 
     //Constructor used to create Bonus/Malus Cards
     Card(char symbol, boolean uncovered, Coordinate position, CardType cardType, String s){
@@ -76,6 +77,12 @@ public class Card {
     }
 
     // ---------- METHODS ----------
+    
+    //returnBonus
+
+    //returnMalus
+
+
     void print(){
         System.out.print(color.toString());
         System.out.print(" "+this.symbol+" ");
