@@ -3,7 +3,7 @@
  * 
  * @author Pascal Galli
  * @author Claudia Grigorean
- * @version 13.12.2024
+ * @version 30.12.2024
  */
 
 import java.util.Scanner;
@@ -48,7 +48,23 @@ public class MemoryTest {
 
         gameUI.clearScreen();
 
-        grid.print();
+        Game gamePlay = new Game(players, grid, gameUI);
+
+        gamePlay.grid.printHidden();
+
+
+        // Ciclo while per la durata del gioco
+        do {
+            // For cycle to let all players play
+            for(int i = 0; i < gamePlay.players.length; i++){
+                System.out.println(gamePlay.players[i] + "'s turn. Play!");
+                gamePlay.playTurn(players[i], i);
+
+            }
+        }while(gamePlay.grid.emptyCells + gamePlay.grid.specials != 0);
+
+
+        //gamePlay.printGameResults();
 
         gameUI.closeScanner();
     }

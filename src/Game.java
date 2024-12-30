@@ -99,26 +99,26 @@ public class Game {
             switch (m) {
                 
                 case STOP:                     
-                p.stopOnce();
-                System.out.println("Fermo un turno!");
-                break;
+                    p.stopOnce();
+                    System.out.println("Fermo un turno!");
+                    break;
                 case LOSEALL:
-                p.loseAll();
-                System.out.println("Perdi tutti punti!");
-                break;
+                    p.loseAll();
+                    System.out.println("Perdi tutti punti!");
+                    break;
                 case CHANGEORDER:
-                changeOrder(index);
-                System.out.println("Ordine di gioco invertito");
-                break;
+                    changeOrder(index);
+                    System.out.println("Ordine di gioco invertito");
+                    break;
                 case SUB100:
-                System.out.println("Perdi 100 punti");
-                p.subMalus();
-                break;
+                    System.out.println("Perdi 100 punti");
+                    p.subMalus();
+                    break;
                 case DONATION:
-                System.out.println("Scegli un giocatore a cui donare metà dei tuoi punti");
-                Player p2=chooseGiocatore(gameUI);
-                int donation=p.subDonation();
-                p2.addDonation(donation);
+                    System.out.println("Scegli un giocatore a cui donare metà dei tuoi punti");
+                    Player p2=chooseGiocatore(gameUI);
+                    int donation=p.subDonation();
+                    p2.addDonation(donation);
             }
         }else{
             Coordinate c2=getCoordinateAndVerify();
@@ -129,26 +129,26 @@ public class Game {
                     Bonus b = grid.cardsGrid[c1.row][c1.col].randomBonus();
                     switch (b) {
                         case ADD100:                     
-                        p.addBonus();
-                        System.out.println("Aggiunti 100 punti!");
-                        break;
+                            p.addBonus();
+                            System.out.println("Aggiunti 100 punti!");
+                            break;
                         case X2:
-                        p.doublePoints();
-                        System.out.println("Punti raddoppiati!");
-                        break;
+                            p.doublePoints();
+                            System.out.println("Punti raddoppiati!");
+                            break;
                         case SHOWGRID:
-                        System.out.println("Visualizza tabella per 5 secondi!");
-                        grid.print();
-                        break;
+                            System.out.println("Visualizza tabella per 5 secondi!");
+                            grid.print();
+                            break;
                         case JOLLY:
-                        System.out.println("Hai ottenuto un JOLLY");
-                        p.hasJolly();
-                        break;
+                            System.out.println("Hai ottenuto un JOLLY");
+                            p.hasJolly();
+                            break;
                         case BRINGTO0:
-                        System.out.println("Scegli un giocatore a cui togliere i punti");
-                        Player p2=chooseGiocatore(gameUI);
-                        p2.loseAll();
-                        break;
+                            System.out.println("Scegli un giocatore a cui togliere i punti");
+                            Player p2=chooseGiocatore(gameUI);
+                            p2.loseAll();
+                            break;
                     }
                 }else{
                     p.addPoints();
