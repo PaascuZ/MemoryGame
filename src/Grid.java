@@ -1,6 +1,6 @@
 public class Grid {
 
-    Card[][] grid;
+    Card[][] cardsGrid;
     int[] BonusMalus={0,0};//Contains how many bonus and malus cards are in the grid, index 0 -> Bonus, index 1 -> Malus
     int specials;//Contains number of special cards present in this grid
     int emptyCells;
@@ -19,7 +19,7 @@ public class Grid {
             height = 13;
             width = 13;
         }
-        this.grid=new Card[height][width];
+        this.cardsGrid=new Card[height][width];
         this.emptyCells=(height*width);
         
         numberOfSpecialCards();
@@ -36,7 +36,7 @@ public class Grid {
      * 
      */
     void numberOfSpecialCards(){
-        double cells=grid.length*grid[0].length, percentage=15;
+        double cells=cardsGrid.length*cardsGrid[0].length, percentage=15;
 
         if(cells%2==0){//checks if the total number of cells is even
 
@@ -102,8 +102,8 @@ public class Grid {
             if( (j%2) == 0 && j != 0){//Changes character only after putting two of the same card inside the grid
                 start++;
             }
-            returnPosition(c);//checks if the grid is full
-            grid[c.row][c.col] = new Card((char)start, false, c, CardType.BONUS,"GREEN");//Creates a card to insert inside the given coordinates 
+            randomPosition(c);//checks if the grid is full
+            cardsGrid[c.row][c.col] = new Card((char)start, c, CardType.BONUS,"GREEN");//Creates a card to insert inside the given coordinates 
             this.emptyCells--;//diminuishes the remaining number of empty cells
             
         }
@@ -112,8 +112,8 @@ public class Grid {
 
         //does same thing as above just for 1 card
         for(int j=0;j<BonusMalus[1];j++){
-            returnPosition(c);
-            grid[c.row][c.col]= new Card((char)start, false, c, CardType.MALUS, "RED");
+            randomPosition(c);
+            cardsGrid[c.row][c.col]= new Card((char)start, c, CardType.MALUS, "RED");
             start++;
             this.emptyCells--;
 
@@ -136,9 +136,9 @@ public class Grid {
                 if( (j%2==0) && (j!=0) ){//changes color only after it has loaded two of the same card inside the grid
                     i++;    
                 }
-                returnPosition(c);//checks for a position in the grid if it is not full
+                randomPosition(c);//checks for a position in the grid if it is not full
                 
-                grid[c.row][c.col]= new Card((char)start, false, c, CardType.NORMAL,i);
+                cardsGrid[c.row][c.col]= new Card((char)start, c, CardType.NORMAL,i);
                 
                 j++;//loaded cells
             }while(j<temp && i<18);
@@ -150,13 +150,25 @@ public class Grid {
      * Method: returnPosition
      * Description: it modifies the Coordinate object passed through reference so it can give a random position where to put the card
      */
-    void returnPosition(Coordinate c){
+    void randomPosition(Coordinate c){
         do{
-            c.row= (int) (Math.random()*this.grid.length);
-            c.col= (int) (Math.random()*this.grid[0].length);            
-        }while(grid[c.row][c.col]!=null);
+            c.row= (int) (Math.random()*this.cardsGrid.length);
+            c.col= (int) (Math.random()*this.cardsGrid[0].length);            
+        }while(cardsGrid[c.row][c.col]!=null);
     }
+  
     
+    char getSymbolFromCoordinate(Coordinate c){
+        Card card = cardsGrid[c.row][c.col]; // Ottieni la carta dalla matrice
+        if (card != null) { // Controlla se esiste una carta in quella posizione
+            return card.symbol; // Ritorna il simbolo
+        }else{
+            return '?';
+        }
+    }
+    //-----------------------------------------------------------
+    //                  PRINT METHODS
+    //-----------------------------------------------------------
     /**
      * Method: print
      * Description: prints the grid showing all the cards uncovered
@@ -164,16 +176,16 @@ public class Grid {
     void print() {
         // Print indices for columns
         System.out.print("    "); // initial space for row indices
-        for (int i = 0; i < grid[0].length; i++) {
+        for (int i = 0; i < cardsGrid[0].length; i++) {
             System.out.printf(" %2d ", (i+1));
         }
         System.out.println();
 
         // Print grid content
-        for (int i = 0; i < grid.length; i++) {
+        for (int i = 0; i < cardsGrid.length; i++) {
             // Print top border for row
             System.out.print("    "); // initial space for row indices
-            for (int j = 0; j < grid[i].length * 4 + 1; j++) {
+            for (int j = 0; j < cardsGrid[i].length * 4 + 1; j++) {
                 System.out.print("-");
             }
             System.out.println();
@@ -181,9 +193,9 @@ public class Grid {
             // Print row index
             System.out.print(" " + ((char)(i+65)) + " |");
 
-            for (int j = 0; j < grid[i].length; j++) {
-                if (grid[i][j] != null) {
-                    grid[i][j].print();
+            for (int j = 0; j < cardsGrid[i].length; j++) {
+                if (cardsGrid[i][j] != null) {
+                    cardsGrid[i][j].print();
                 } else {
                     System.out.print("   ");
                 }
@@ -194,7 +206,7 @@ public class Grid {
 
         // Print bottom border for last row
         System.out.print("    "); // initial space for row indices
-        for (int i = 0; i < grid[0].length * 4 + 1; i++) {
+        for (int i = 0; i < cardsGrid[0].length * 4 + 1; i++) {
             System.out.print("-");
         }
         System.out.println();
@@ -207,16 +219,16 @@ public class Grid {
     void printHidden() {
         // Print indices for columns
         System.out.print("    "); // initial space for row indices
-        for (int i = 0; i < grid[0].length; i++) {
+        for (int i = 0; i < cardsGrid[0].length; i++) {
             System.out.printf(" %2d ", i);
         }
         System.out.println();
 
         // Print grid content
-        for (int i = 0; i < grid.length; i++) {
+        for (int i = 0; i < cardsGrid.length; i++) {
             // Print top border for row
             System.out.print("    "); // initial space for row indices
-            for (int j = 0; j < grid[i].length * 4 + 1; j++) {
+            for (int j = 0; j < cardsGrid[i].length * 4 + 1; j++) {
                 System.out.print("-");
             }
             System.out.println();
@@ -224,10 +236,10 @@ public class Grid {
             // Print row index
             System.out.printf(" %2d |", i);
 
-            for (int j = 0; j < grid[i].length; j++) {
-                if (grid[i][j] != null) {
-                    if(grid[i][j].uncovered){
-                        grid[i][j].print();
+            for (int j = 0; j < cardsGrid[i].length; j++) {
+                if (cardsGrid[i][j] != null) {
+                    if(cardsGrid[i][j].uncovered){
+                        cardsGrid[i][j].print();
                     }else{
                         System.out.print(" ! ");
                     }
@@ -242,7 +254,7 @@ public class Grid {
 
         // Print bottom border for last row
         System.out.print("    "); // initial space for row indices
-        for (int i = 0; i < grid[0].length * 4 + 1; i++) {
+        for (int i = 0; i < cardsGrid[0].length * 4 + 1; i++) {
             System.out.print("-");
         }
         System.out.println();

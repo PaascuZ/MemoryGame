@@ -36,6 +36,10 @@ public class Player {
     //-------------------------------------------------------------------------------------------
 
     void addPoints(){
+        this.points+=10;
+    }
+    
+    void addBonus(){
         this.points+=100;
     }
 
@@ -61,17 +65,12 @@ public class Player {
     //-------------------------------------------------------------------------------------------
 
     int subDonation(){
-        int points=10;
-        if(this.points-points<10){
-            points=this.points;
-            this.points=0;
-        }else{
-            this.points-=points;
-        }
-        return points;
+        int temp=this.points/2;
+        this.points-=temp;
+        return temp;
     }
 
-    void subPoints(){
+    void subMalus(){
         this.points-=100;
         if(this.points<0){
             this.points=0;
@@ -86,6 +85,10 @@ public class Player {
         this.stop=true;
     }
 
+    void removeStop(){
+        this.stop=false;
+    }
+
     //-------------------------------------------------------------------------------------------
     //                                    GENERAL METHODS
     //-------------------------------------------------------------------------------------------
@@ -98,6 +101,11 @@ public class Player {
         System.out.println("Stopped: " + (this.stop ? "Yes" : "No"));
         // sout to take some space
         System.out.println();
+    }
+
+    void printGameInfo(){
+        System.out.println("Name:    " + this.name);
+        System.out.println("Points:  " + this.points);
     }
 
 }

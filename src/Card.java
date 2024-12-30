@@ -53,35 +53,61 @@ enum CardType {
 public class Card {
     char symbol;
     boolean uncovered;
+    boolean found;
     Coordinate position;
     CardType cardType;
     Color color;
 
     //Constructor used to create Bonus/Malus Cards
-    Card(char symbol, boolean uncovered, Coordinate position, CardType cardType, String s){
+    Card(char symbol, Coordinate position, CardType cardType, String s){
         this.symbol = symbol;
-        this.uncovered = uncovered;
+        this.uncovered = false;
         this.position = position;
         this.cardType = cardType;
         this.color=Color.valueOf(s);
     }
 
     //Constructor used to create all other cards
-    Card(char symbol, boolean uncovered, Coordinate position, CardType cardType, int i){
+    Card(char symbol, Coordinate position, CardType cardType, int i){
         this.symbol = symbol;
-        this.uncovered = uncovered;
         this.position = position;
         this.cardType = cardType;
         this.color=Color.values()[i];
     }
 
     // ---------- METHODS ----------
+    
     void print(){
         System.out.print(color.toString());
         System.out.print(" "+this.symbol+" ");
         System.out.print(Color.RESET);
     }
 
+    boolean isSame(Card c){
+        if(this.symbol==c.symbol && this.cardType==c.cardType && this.color==c.color){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    //DEFINIRE COSTANTI
+    Bonus randomBonus(){
+        int i=(int) (Math.random()*5);
+        return Bonus.values()[i];
+    }
+
+    //DEFINIRE COSTANTI
+    Malus randomMalus(){
+        int i=(int) (Math.random()*5);
+        return Malus.values()[i];
+    }
+
+    void foundCard(){
+        this.symbol=' ';
+        this.found=true;
+    }
+    
     void printInfo(){
         System.out.println("Symbol: " + this.symbol);
         System.out.println("Status: " + (this.uncovered ? "Uncovered" : "Covered"));
