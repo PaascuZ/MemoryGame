@@ -166,9 +166,11 @@ public class Grid {
             return '?';
         }
     }
+    
     //-----------------------------------------------------------
     //                  PRINT METHODS
     //-----------------------------------------------------------
+
     /**
      * Method: print
      * Description: prints the grid showing all the cards uncovered
@@ -220,7 +222,7 @@ public class Grid {
         // Print indices for columns
         System.out.print("    "); // initial space for row indices
         for (int i = 0; i < cardsGrid[0].length; i++) {
-            System.out.printf(" %2d ", i);
+            System.out.printf(" %2d ", (i+1));
         }
         System.out.println();
 
@@ -234,18 +236,13 @@ public class Grid {
             System.out.println();
 
             // Print row index
-            System.out.printf(" %2d |", i);
+            System.out.print(" " + ((char)(i+65)) + " |");
 
             for (int j = 0; j < cardsGrid[i].length; j++) {
-                if (cardsGrid[i][j] != null) {
-                    if(cardsGrid[i][j].uncovered){
-                        cardsGrid[i][j].print();
-                    }else{
-                        System.out.print(" ! ");
-                    }
-                    
-                } else {
-                    System.out.print("   ");
+                if(cardsGrid[i][j].uncovered){
+                    cardsGrid[i][j].print();
+                }else{
+                    System.out.print(" ! ");
                 }
                 System.out.print("|");
             }

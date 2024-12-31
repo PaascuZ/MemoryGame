@@ -9,4 +9,12 @@ public class Coordinate {
 
     Coordinate(){
     }
+
+    boolean isSame(Coordinate c){
+        if(this.row==c.row && this.col==c.col){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }

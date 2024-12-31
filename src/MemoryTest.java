@@ -6,8 +6,6 @@
  * @version 30.12.2024
  */
 
-import java.util.Scanner;
-
 
 class Constants {
     static final int MAX_NR_CELLS = 186;
@@ -50,14 +48,11 @@ public class MemoryTest {
 
         Game gamePlay = new Game(players, grid, gameUI);
 
-        gamePlay.grid.printHidden();
-
-
         // Ciclo while per la durata del gioco
         do {
             // For cycle to let all players play
             for(int i = 0; i < gamePlay.players.length; i++){
-                System.out.println(gamePlay.players[i] + "'s turn. Play!");
+                System.out.println(gamePlay.players[i].name + "'s turn. Play!");
                 gamePlay.playTurn(players[i], i);
 
             }
