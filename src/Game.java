@@ -42,14 +42,17 @@ public class Game {
         int col = 0;
         boolean isValidInputs = false;
 
+        grid.printHidden();
         // Check for coordinate
         do {
             System.out.print("Insert your coordinate: ");
             coords = gameUI.scanner.nextLine();
 
-            row = coords.toUpperCase().charAt(0) - 'A' + 1;
-            col = Integer.parseInt(coords.substring(1));
-
+            //Controllo se nel range delle dimensioni della Grid
+            row = coords.toUpperCase().charAt(0) - 'A';
+            col = Integer.parseInt(coords.substring(1))-1;
+            
+            //System.out.println("Coordinate: "+row+col);
             c = new Coordinate(row, col);
 
             //Check if it is a empty cell
@@ -92,12 +95,76 @@ public class Game {
     }
     
     void playTurn(Player p, int index) {
+
         Coordinate c1=getCoordinateAndVerify();
 
         if(grid.cardsGrid[c1.row][c1.col].cardType==CardType.MALUS){
             Malus m=grid.cardsGrid[c1.row][c1.col].randomMalus();
+            malusOption(m, p, index);
+            grid.cardsGrid[c1.row][c1.col].foundCard();
+        }else{
+            grid.cardsGrid[c1.row][c1.col].uncovered=true;
+            Coordinate c2=getCoordinateAndVerify();
+            grid.cardsGrid[c2.row][c2.col].uncovered=true;
+            grid.printHidden();
+            
+            if(grid.cardsGrid[c1.row][c1.col].isSame(grid.cardsGrid[c2.row][c2.col])) {
+            
+                //Controllo soltanto la prima carta perchè so che sono uguali
+                if(grid.cardsGrid[c1.row][c1.col].cardType==CardType.BONUS){
+                    Bonus b = grid.cardsGrid[c1.row][c1.col].randomBonus();
+                    bonusOption(b, p);
+                }else{
+                    p.addPoints();
+                    System.out.println("Hai indovinato! Punteggio: "+p.points);   
+                    grid.cardsGrid[c1.row][c1.col].foundCard();
+                    grid.cardsGrid[c2.row][c2.col].foundCard();                 
+                }
+            }else{
+                if(c1.isSame(c2)){
+                    System.out.println("Hai scelto due volte la stessa carta, perdi il turno!");
+                    grid.cardsGrid[c1.row][c1.col].uncovered=false;
+                }else{
+                    System.out.println("Carte non uguali");
+                    grid.cardsGrid[c1.row][c1.col].uncovered=false;
+                    grid.cardsGrid[c2.row][c2.col].uncovered=false;
+                }
+            }
+
+        }
+
+    }
+
+    void bonusOption(Bonus b, Player p){
+        System.out.println(b);
+        switch (b) {
+            case ADD100:                     
+                p.addBonus();
+                System.out.println("Aggiunti 100 punti!");
+                break;
+            case X2:
+                p.doublePoints();
+                System.out.println("Punti raddoppiati!");
+                break;
+            case SHOWGRID:
+                System.out.println("Visualizza tabella per 5 secondi!");
+                grid.print();
+                break;
+            case JOLLY:
+                System.out.println("Hai ottenuto un JOLLY");
+                p.hasJolly();
+                break;
+            case BRINGTO0:
+                System.out.println("Scegli un giocatore a cui togliere i punti");
+                Player p2=chooseGiocatore(gameUI);
+                p2.loseAll();
+                break;
+        }
+    }
+
+    void malusOption(Malus m, Player p, int index){
+        System.out.println(m);
             switch (m) {
-                
                 case STOP:                     
                     p.stopOnce();
                     System.out.println("Fermo un turno!");
@@ -120,52 +187,7 @@ public class Game {
                     int donation=p.subDonation();
                     p2.addDonation(donation);
             }
-        }else{
-            Coordinate c2=getCoordinateAndVerify();
-            if(grid.cardsGrid[c1.row][c1.col].isSame(grid.cardsGrid[c2.row][c2.col])) {
-            
-                //Controllo soltanto la prima carta perchè so che sono uguali
-                if(grid.cardsGrid[c1.row][c1.col].cardType==CardType.BONUS){
-                    Bonus b = grid.cardsGrid[c1.row][c1.col].randomBonus();
-                    switch (b) {
-                        case ADD100:                     
-                            p.addBonus();
-                            System.out.println("Aggiunti 100 punti!");
-                            break;
-                        case X2:
-                            p.doublePoints();
-                            System.out.println("Punti raddoppiati!");
-                            break;
-                        case SHOWGRID:
-                            System.out.println("Visualizza tabella per 5 secondi!");
-                            grid.print();
-                            break;
-                        case JOLLY:
-                            System.out.println("Hai ottenuto un JOLLY");
-                            p.hasJolly();
-                            break;
-                        case BRINGTO0:
-                            System.out.println("Scegli un giocatore a cui togliere i punti");
-                            Player p2=chooseGiocatore(gameUI);
-                            p2.loseAll();
-                            break;
-                    }
-                }else{
-                    p.addPoints();
-                }
-    
-    
-            }else{
-                System.out.println("Carte non uguali");
-            }
-
-        }
-        
-        
-        
-    
     }
-
     /**
      * Name: getNumberOfEmptyCells()
      * Description: this method return the number of empty cells. So the game have a

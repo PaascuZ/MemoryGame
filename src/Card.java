@@ -84,7 +84,7 @@ public class Card {
     }
 
     boolean isSame(Card c){
-        if(this.symbol==c.symbol && this.cardType==c.cardType && this.color==c.color){
+        if(this.symbol==c.symbol && this.cardType==c.cardType && this.color==c.color && this.position.isSame(c.position)){
             return true;
         }else{
             return false;
@@ -105,7 +105,8 @@ public class Card {
 
     void foundCard(){
         this.symbol=' ';
-        this.found=true;
+        this.color=Color.RESET;
+        this.uncovered=true;
     }
     
     void printInfo(){

@@ -143,17 +143,15 @@ public class ConsoleInteractionUtils {
     }
 
     public static void printMenu(){
-        System.out.println();
-        System.out.println();
+        System.out.println("\n\n");
 
         System.out.println("    -----------------   ");
         System.out.println("    |  MEMORY GAME  |   ");
         System.out.println("    -----------------   ");
         System.out.println();
-        System.out.println("  Press any key to begin");
+        System.out.println("  Press any key to begin");//Funziona solo con Enter non con Any key
 
-        System.out.println();
-        System.out.println();
+        System.out.println("\n\n");
     }
 
     /**
