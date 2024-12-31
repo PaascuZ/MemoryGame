@@ -43,21 +43,49 @@ public class MemoryTest {
         //Ask for grid dimension
         gDimension = gameUI.getGridDimensions();
         grid = new Grid(gDimension[0], gDimension[1]); 
+        
 
         gameUI.clearScreen();
+        grid.print();
 
         Game gamePlay = new Game(players, grid, gameUI);
 
-        // Ciclo while per la durata del gioco
+        int i = 0; // Indice iniziale
+
         do {
+            System.out.println(players[i].name + "'s turn. Play!");
+
+            // Gioca il turno
+            gamePlay.playTurn(players[i], i);
+
+            // Controllo fine partita
+            if (gamePlay.grid.emptyCells + gamePlay.grid.specials == 0) {
+                System.out.println("Fine Gioco!");
+                break;
+            }
+
+            // Controlla la direzione direttamente dalla classe Game
+            if (gamePlay.isClockwise()) { // Metodo getter per la direzione
+                i = (i + 1) % players.length; // Orario
+            } else {
+                i = (i - 1 + players.length) % players.length; // Antiorario
+            }
+
+        } while (gamePlay.grid.emptyCells + gamePlay.grid.specials != 0);
+
+        // Ciclo while per la durata del gioco
+        /*do {
             // For cycle to let all players play
             for(int i = 0; i < gamePlay.players.length; i++){
                 System.out.println(gamePlay.players[i].name + "'s turn. Play!");
-                gamePlay.playTurn(players[i], i);
-
+                i = gamePlay.playTurn(players[i], i);
+                if(gamePlay.grid.emptyCells + gamePlay.grid.specials == 0){
+                    System.out.println("Fine Gioco!");
+                    break;
+                }
             }
         }while(gamePlay.grid.emptyCells + gamePlay.grid.specials != 0);
-
+        */
 
         //gamePlay.printGameResults();
 

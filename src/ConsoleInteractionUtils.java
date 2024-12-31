@@ -142,7 +142,7 @@ public class ConsoleInteractionUtils {
         return players;
     }
 
-    public static void printMenu(){
+    void printMenu(){
         System.out.println("\n\n");
 
         System.out.println("    -----------------   ");
@@ -158,7 +158,7 @@ public class ConsoleInteractionUtils {
      * Method: clearScreen
      * Description: Using ProcessBuilder to clear the terminal during the game
      */
-    public static void clearScreen(){
+    void clearScreen(){
         try {
             if (System.getProperty("os.name").contains("Windows")) {
                 new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
