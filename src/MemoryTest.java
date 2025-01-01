@@ -19,10 +19,8 @@ public class MemoryTest {
         ConsoleInteractionUtils gameUI = new ConsoleInteractionUtils();
         Player[] players;
         Grid grid;
-
         // vArs
         int[] gDimension = new int[2];
-
 
         // -------------------------------
         // ---------- GAME FLOW ----------
@@ -42,24 +40,36 @@ public class MemoryTest {
 
         //Ask for grid dimension
         gDimension = gameUI.getGridDimensions();
+        
         grid = new Grid(gDimension[0], gDimension[1]); 
+        grid.print();
 
+        
         gameUI.clearScreen();
 
-        Game gamePlay = new Game(players, grid, gameUI);
+        grid.print();
+        
+
+        Game gamePlay = new Game(players, grid, gameUI);        
 
         // Ciclo while per la durata del gioco
         do {
             // For cycle to let all players play
             for(int i = 0; i < gamePlay.players.length; i++){
                 System.out.println(gamePlay.players[i].name + "'s turn. Play!");
-                gamePlay.playTurn(players[i], i);
-
+                i = gamePlay.playTurn(players[i], i);
+                gameUI.clearScreen();
+                if(gamePlay.grid.normals + gamePlay.grid.specials == 0){
+                    System.out.println("Game Over!");
+                    break;
+                }
+                
             }
-        }while(gamePlay.grid.emptyCells + gamePlay.grid.specials != 0);
+        }while(gamePlay.grid.normals + gamePlay.grid.specials != 0);
+        
 
-
-        //gamePlay.printGameResults();
+        gamePlay.printGameResults();
+        
 
         gameUI.closeScanner();
     }
