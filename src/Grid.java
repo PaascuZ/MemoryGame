@@ -263,4 +263,11 @@ public class Grid {
         System.out.println();
     }
 
+    int getGridWidth(){
+        return cardsGrid[0].length;
+    }
+
+    int getGridHeight(){
+        return cardsGrid.length;
+    }
 }
