@@ -128,28 +128,42 @@ public class ConsoleInteractionUtils {
         clearScreen();
 
         // Asking players name
-        String playerName = "";
         Player[] players = new Player[numPlayers];
 
-        for(int i = 0; i < numPlayers; i++){
+        for (int i = 0; i < numPlayers; i++) {
             players[i] = new Player(""); // new Player initialized
-            System.out.println("PLAYER " + (i+1) + " NAME");
-            playerName = readStringAndEnsureIsNotEmptyOrWhiteSpaces();
-            players[i].name = playerName;
-            clearScreen();
+            String playerName;
+            boolean isDuplicate;
+    
+            do {
+                System.out.println("PLAYER " + (i + 1) + " NAME");
+                playerName = readStringAndEnsureIsNotEmptyOrWhiteSpaces();
+    
+                // Check for duplicates
+                isDuplicate = false;
+                for (int j = 0; j < i; j++) {
+                    if (playerName.equals(players[j].name)) {
+                        System.out.println("This name already exists. Choose another name.");
+                        isDuplicate = true; // Flag the name as duplicate
+                        break; // Exit the inner loop
+                    }
+                }
+            } while (isDuplicate); // Repeat until name is unique
+    
+            players[i].name = playerName; // Assign the valid name
         }
 
         return players;
     }
 
-    public static void printMenu(){
+    void printMenu(){
         System.out.println("\n\n");
 
         System.out.println("    -----------------   ");
         System.out.println("    |  MEMORY GAME  |   ");
         System.out.println("    -----------------   ");
         System.out.println();
-        System.out.println("  Press any key to begin");//Funziona solo con Enter non con Any key
+        System.out.println("  Press ENTER key to begin");
 
         System.out.println("\n\n");
     }
@@ -158,7 +172,7 @@ public class ConsoleInteractionUtils {
      * Method: clearScreen
      * Description: Using ProcessBuilder to clear the terminal during the game
      */
-    public static void clearScreen(){
+    void clearScreen(){
         try {
             if (System.getProperty("os.name").contains("Windows")) {
                 new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();

@@ -13,17 +13,11 @@ enum Color {
     BLUE_U("\033[4;34m"),      // BLUE
     MAGENTA_U("\033[4;35m"),   // MAGENTA
     CYAN_U("\033[4;36m"),      // CYAN
-    WHITE_U("\033[4;37m"),     // WHITE
+    WHITE_U("\033[4;37m");     // WHITE
 
-    //HIGH INTENSITY
-    H_BLACK("\033[1;30m"),   // BLACK
-    H_RED("\033[1;31m"),     // RED
-    H_GREEN("\033[1;32m"),   // GREEN
-    H_YELLOW("\033[1;33m"),  // YELLOW
-    H_BLUE("\033[1;34m"),    // BLUE
-    H_MAGENTA("\033[1;35m"), // MAGENTA
-    H_CYAN("\033[1;36m"),    // CYAN
-    H_WHITE("\033[1;37m");   // WHITE
+    /*Index of starting color and ending color are specified as constants in class Grid
+     *if any further changes are made, modify those constants too
+    */
 
     String code="";
 
@@ -31,7 +25,6 @@ enum Color {
         this.code = code;
     }
 
-    @Override
     public String toString() {
         return code;
     }
@@ -51,12 +44,16 @@ enum CardType {
 }
 
 public class Card {
+    private static final double MAX_SPECIALS = 5;
+
     char symbol;
+    Color color;
     boolean uncovered;
-    boolean found;
     Coordinate position;
     CardType cardType;
-    Color color;
+    
+    
+    // ----------------CONSTRUCTORS-----------------
 
     //Constructor used to create Bonus/Malus Cards
     Card(char symbol, Coordinate position, CardType cardType, String s){
@@ -75,40 +72,66 @@ public class Card {
         this.color=Color.values()[i];
     }
 
-    // ---------- METHODS ----------
-    
-    void print(){
-        System.out.print(color.toString());
-        System.out.print(" "+this.symbol+" ");
-        System.out.print(Color.RESET);
-    }
+    // ----------------METHODS-----------------
 
+    /**
+     * Method:isSame
+     * Description: checks if two Cards have the same content but have different positions in the grid 
+     * (so that the user can't pick the same card twice)
+     * @param c
+     * @return true if same in content but in different positions
+     */
     boolean isSame(Card c){
-        if(this.symbol==c.symbol && this.cardType==c.cardType && this.color==c.color && this.position.isSame(c.position)){
+        if(this.symbol==c.symbol && this.cardType.equals(c.cardType) && this.color.equals(c.color) && !this.position.isSame(c.position)){
             return true;
         }else{
             return false;
         }
     }
 
-    //DEFINIRE COSTANTI
+    /**
+     * Method: randomBonus
+     * Description: randomly estracts a number between 0 and MAX_SPECIALS, and returns the bonus in that position
+     *@return a random Bonus
+     */
     Bonus randomBonus(){
-        int i=(int) (Math.random()*5);
+        int i=(int) (Math.random()*MAX_SPECIALS);
         return Bonus.values()[i];
     }
 
-    //DEFINIRE COSTANTI
+    /**
+     * Method: randomMalus
+     * Description: randomly estracts a number between 0 and MAX_SPECIALS, and returns the malus in that position
+     *@return a random Malus
+     */
     Malus randomMalus(){
-        int i=(int) (Math.random()*5);
+        int i=(int) (Math.random()*MAX_SPECIALS);
         return Malus.values()[i];
     }
 
+    /**
+     * Method: foundCard
+     * Description: changes the content of the card if that card has been found
+     */
     void foundCard(){
         this.symbol=' ';
         this.color=Color.RESET;
         this.uncovered=true;
     }
     
+    //------------PRINT METHODS--------------
+
+    /**
+     * Method: print
+     * Description: prints content of a card
+    */
+    void print(){
+        System.out.print(color.toString());
+        System.out.print(" "+this.symbol+" ");
+        System.out.print(Color.RESET);
+    }
+
+    /*VIENE UTILIZZATO?
     void printInfo(){
         System.out.println("Symbol: " + this.symbol);
         System.out.println("Status: " + (this.uncovered ? "Uncovered" : "Covered"));
@@ -117,5 +140,6 @@ public class Card {
         System.out.println(" > Row: " + this.position.row);
         System.out.println("Type:   " + this.cardType);
         System.out.println("Color:  " + this.color);
-    }
+    }        
+    */
 }
