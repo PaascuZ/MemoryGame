@@ -2,7 +2,7 @@ public class Grid {
     private static final double PERCENTAGE = 15;
     private static final int STARTING_CHAR = 34;
     private static final int STARTING_COLOR = 3;
-    private static final int ENDING_COLOR = 10;
+    private static final int ENDING_COLOR = 9;
 
     Card[][] cardsGrid;
     //Contains how many bonus and malus cards are in the grid, index 0 -> Bonus, index 1 -> Malus
