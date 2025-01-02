@@ -5,6 +5,13 @@ import java.lang.Math;
 public class ConsoleInteractionUtils {
     Scanner scanner = new Scanner(System.in);
 
+    /**
+     * Method: readIntegerInRange
+     * Description: used to check if an input is valid and between a certain interval
+     * @param min
+     * @param max
+     * @return
+     */
     int readIntegerInRange(int min, int max) {
         int input = 0;
         boolean correctInput = false;
@@ -25,6 +32,11 @@ public class ConsoleInteractionUtils {
         return input;
     }
 
+    /**
+     * Method: readStringAndEnsureIsNotEmptyOrWhiteSpaces
+     * Descrption: Used to check if a string is valid and not empty
+     * @return
+     */
     String readStringAndEnsureIsNotEmptyOrWhiteSpaces() {
         String input = "";
         boolean correctInput = false;
@@ -49,21 +61,17 @@ public class ConsoleInteractionUtils {
         return height > 0 && width > 0 && height * width <= Constants.MAX_NR_CELLS && !(height == 1 && width == 1);
     }
 
+    /**
+     * Method: getGridDimensions
+     * Description: Used to get the dimension of the game grid, checkin input valuse
+     *              and returning an array of integers
+     * @return
+     */
     int[] getGridDimensions() {
         int height = 0;
         int width = 0;
         boolean isValidInputs = false;
         int maxWidth = 0;
-
-        /*
-        String message = """
-                Insert the height of the grid such that:
-                > Height: [0, %d]
-                """.formatted(Constants.MAX_NR_ROWS);
-        
-
-        System.out.println(message);
-        */
         
         // Check for height
         do {
@@ -101,24 +109,11 @@ public class ConsoleInteractionUtils {
         return new int[] { height, width };
     }
 
-    Coordinate getCoordinate(int gridHeight, int gridWidth) {
-        // DA RISCRIVERE PER LE NUOVE COORDINATE
-        String message = """
-                Insert row and column of the coordinate such that:
-                > Row: [0, %d]
-                > Col: [0, %d]
-                """.formatted(gridHeight, gridWidth);
-
-        System.out.println(message);
-        System.out.println("Insert row: ");
-        int row = readIntegerInRange(0, gridHeight - 1);
-
-        System.out.println("Insert column: ");
-        int col = readIntegerInRange(0, gridWidth - 1);
-
-        return new Coordinate(row, col);
-    }
-
+    /**
+     * Method: getNumberAndNamesPlayers
+     * Descrption: This method is used to initialize the array of players and their names
+     * @return
+     */
     Player[] getNumberAndNamesPlayers(){
         int numPlayers = 0;
         // Insert number of players
@@ -136,6 +131,7 @@ public class ConsoleInteractionUtils {
             boolean isDuplicate;
     
             do {
+                printUpperSpace();
                 System.out.println("PLAYER " + (i + 1) + " NAME");
                 playerName = readStringAndEnsureIsNotEmptyOrWhiteSpaces();
     
@@ -157,14 +153,22 @@ public class ConsoleInteractionUtils {
     }
 
     void printMenu(){
+        String[] art = {
+            "     __  ___                       ",
+            "    /  |/  /__ __ _  ___  ______ __",
+            "   / /|_/ / -_)  ' \\/ _ \\/ __/ // /",
+            "  /_/  /_/\\__/_/_/_/\\___/_/  \\_, / ",
+            "                            /___/ "
+        };
+
+        // Print the menu
         System.out.println("\n\n");
-
-        System.out.println("    -----------------   ");
-        System.out.println("    |  MEMORY GAME  |   ");
-        System.out.println("    -----------------   ");
-        System.out.println();
-        System.out.println("  Press ENTER key to begin");
-
+        // Print the ASCII
+        for (String line : art) {
+            System.out.println(line);
+        }
+        System.out.println("\n\n");
+        System.out.println("     Press ENTER key to begin");
         System.out.println("\n\n");
     }
 

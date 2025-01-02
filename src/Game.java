@@ -8,15 +8,13 @@ public class Game {
     Game(Player[] players, Grid grid, ConsoleInteractionUtils gameUI){
         this.players = players;
         this.grid = grid;
-        this.gameUI=gameUI;
-        
+        this.gameUI=gameUI; 
     }
 
     //-------------------------METHODS-------------------------------
 
     int playTurn(Player p, int index) {
         int changeOrderIndex=index;
-
         grid.printHidden();
 
         if(p.stop==true){
@@ -26,12 +24,14 @@ public class Game {
         }else{
             Coordinate c1=getCoordinateAndVerify();
             grid.cardsGrid[c1.row][c1.col].uncovered=true;
+            System.out.println();
             grid.printHidden();
             if(grid.cardsGrid[c1.row][c1.col].cardType==CardType.MALUS){
                 changeOrderIndex=doWhenMalus(grid.cardsGrid[c1.row][c1.col], p, index);             
             }else{
                 Coordinate c2=getCoordinateAndVerify();
                 grid.cardsGrid[c2.row][c2.col].uncovered=true;
+                System.out.println();
                 grid.printHidden();
                 if(grid.cardsGrid[c2.row][c2.col].cardType==CardType.MALUS){
                     changeOrderIndex=doWhenMalus(grid.cardsGrid[c2.row][c2.col], p, index);             
@@ -69,8 +69,13 @@ public class Game {
         return changeOrderIndex;
     }
 
+    /**
+     * Method: getCoordinateAndVerify
+     * Descrption: Check if coordinates inserted from the player are valid or not
+     * @return
+     */
     Coordinate getCoordinateAndVerify(){
-        Coordinate c;
+        Coordinate c = null;
         String coords = "";
         int row = 0;
         int col = 0;
@@ -79,6 +84,7 @@ public class Game {
         
         // Check for coordinate
         do {
+            System.out.println();
             System.out.print("Insert your coordinate (i.e: A2): ");
             coords = gameUI.scanner.nextLine();
 
@@ -86,15 +92,18 @@ public class Game {
             row = coords.toUpperCase().charAt(0) - 'A';
             col = Integer.parseInt(coords.substring(1))-1;
             
-            //System.out.println("Coordinate: "+row+col);
-            c = new Coordinate(row, col);
-
-            //Check if it is an empty cell
-            if(grid.getSymbolFromCoordinate(c) == ' '){
+            // Check if coordinates are between grid dimension
+            if(row >= grid.getGridHeight() || col >= grid.getGridWidth()){
                 isValidInputs = false;
             }else{
-                isValidInputs = true;
-            }
+                c = new Coordinate(row, col);
+                //Check if it is an empty cell
+                if(grid.getSymbolFromCoordinate(c) == ' '){
+                    isValidInputs = false;
+                }else{
+                    isValidInputs = true;
+                }
+            }           
 
             if (!isValidInputs) {
                 System.out.println("One or more constraints are not met.");
