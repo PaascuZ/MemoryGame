@@ -6,7 +6,6 @@ enum Color {
 
     //Usable patterns for non special cards start from here (index=3)
     //UNDERLINED
-    BLACK_U("\033[4;30m"),     // BLACK
     RED_U("\033[4;31m"),       // RED
     GREEN_U("\033[4;32m"),     // GREEN
     YELLOW_U("\033[4;33m"),    // YELLOW
