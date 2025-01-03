@@ -34,7 +34,8 @@ public class Game {
                 System.out.println();
                 grid.printHidden();
                 if(grid.cardsGrid[c2.row][c2.col].cardType==CardType.MALUS){
-                    changeOrderIndex=doWhenMalus(grid.cardsGrid[c2.row][c2.col], p, index);             
+                    changeOrderIndex=doWhenMalus(grid.cardsGrid[c2.row][c2.col], p, index);
+                    grid.cardsGrid[c1.row][c1.col].uncovered=false;             
                 }else{
                     if(grid.cardsGrid[c1.row][c1.col].isSame(grid.cardsGrid[c2.row][c2.col])) {
                 
@@ -86,29 +87,36 @@ public class Game {
         do {
             System.out.println();
             System.out.print("Insert your coordinate (i.e: A2): ");
-            coords = gameUI.scanner.nextLine();
+            if(gameUI.scanner.hasNext()){
+                coords = gameUI.scanner.nextLine();
+                if(coords.length() == 2){
+                    //Controllo se nel range delle dimensioni della Grid
+                    row = coords.toUpperCase().charAt(0) - 'A';
+                    col = Integer.parseInt(coords.substring(1))-1;
 
-            //Controllo se nel range delle dimensioni della Grid
-            row = coords.toUpperCase().charAt(0) - 'A';
-            col = Integer.parseInt(coords.substring(1))-1;
-            
-            // Check if coordinates are between grid dimension
-            if(row >= grid.getGridHeight() || col >= grid.getGridWidth()){
-                isValidInputs = false;
-            }else{
-                c = new Coordinate(row, col);
-                //Check if it is an empty cell
-                if(grid.getSymbolFromCoordinate(c) == ' '){
-                    isValidInputs = false;
+                    // Check if coordinates are between grid dimension
+                    if(row >= grid.getGridHeight() || col >= grid.getGridWidth()){
+                        isValidInputs = false;
+                    }else{
+                        c = new Coordinate(row, col);
+                        //Check if it is an empty cell
+                        if(grid.getSymbolFromCoordinate(c) == ' '){
+                            isValidInputs = false;
+                        }else{
+                            isValidInputs = true;
+                        }
+                    }           
                 }else{
-                    isValidInputs = true;
+                    isValidInputs = false;
                 }
-            }           
+            }else{
+                isValidInputs = false;
+            } 
 
             if (!isValidInputs) {
                 System.out.println("One or more constraints are not met.");
             }
-
+            
         } while (!isValidInputs);
 
         return c;
@@ -139,9 +147,7 @@ public class Game {
      */
     int doWhenMalus(Card c, Player p, int index){
 
-        
-        //Malus m=grid.cardsGrid[c1.row][c1.col].randomMalus();
-        Malus m=Malus.CHANGEORDER;
+        Malus m=c.randomMalus();
         boolean applyMalus=true;
         if(p.jolly==true){
             System.out.println("Do you want to use the Jolly?");
@@ -159,12 +165,14 @@ public class Game {
         if(applyMalus){
             malusOption(m, p, index);
             if(m==Malus.CHANGEORDER){
+                grid.specials--;
                 return -1;
             }
         }                  
         c.foundCard();
         grid.specials--;            
         return index;
+        
     }
 
     /**
@@ -324,7 +332,7 @@ public class Game {
 
         // Stampo la classifica
         for(int i = 0; i < this.players.length; i++){
-            System.out.println((i+1) + players[i].printGameInfo());
+            System.out.println((i+1)+". " + players[i].printGameInfo());
         }
 
     }

@@ -6,22 +6,7 @@ public class Player {
 
     //--------CONSTRUCTORS------------------
 
-    //VIENE MAI USATO?
-    /* 
-    Player(String name, int points){
-        // Se 
-        if(name.isEmpty()){
-            this.name = "Unknown";
-        }else{
-            this.name = name;
-        }
-        this.points = points < 0 ? 0 : points;
-        this.jolly = false;
-        this.stop = false;
-    }
-    */
-
-    // Second constructor, to insert only the name when preparing the game
+     // Constructor to insert only the name when preparing the game
     Player(String name){
         if(name.isEmpty()){
             this.name = "Unknown";
@@ -132,18 +117,6 @@ public class Player {
     }
 
     //------------------------GENERAL METHODS-------------------------------
-
-    //VIENE MAI UTILIZZATO?
-    /*void print(){
-        System.out.println("Name:    " + this.name);
-        System.out.println("Points:  " + this.points);
-        System.out.println("--- STATUS ---");
-        System.out.println("Jolly:   " + (this.jolly ? "Yes" : "No"));
-        System.out.println("Stopped: " + (this.stop ? "Yes" : "No"));
-        // sout to take some space
-        System.out.println();
-    }
-    */
 
     /**
      * Method: printGameInfo

@@ -18,6 +18,8 @@ enum Color {
      *if any further changes are made, modify those constants too
     */
 
+    
+
     String code="";
 
     Color(String code) {
@@ -130,15 +132,4 @@ public class Card {
         System.out.print(Color.RESET);
     }
 
-    /*VIENE UTILIZZATO?
-    void printInfo(){
-        System.out.println("Symbol: " + this.symbol);
-        System.out.println("Status: " + (this.uncovered ? "Uncovered" : "Covered"));
-        System.out.println("Coordinates:");
-        System.out.println(" > Col: " + this.position.col);
-        System.out.println(" > Row: " + this.position.row);
-        System.out.println("Type:   " + this.cardType);
-        System.out.println("Color:  " + this.color);
-    }        
-    */
 }
