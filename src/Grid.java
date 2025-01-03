@@ -167,12 +167,20 @@ public class Grid {
     }
   
     char getSymbolFromCoordinate(Coordinate c){
-        Card card = cardsGrid[c.row][c.col]; // Ottieni la carta dalla matrice
-        if (card != null) { // Controlla se esiste una carta in quella posizione
-            return card.symbol; // Ritorna il simbolo
+        Card card = cardsGrid[c.row][c.col]; // Get card from Matrix
+        if (card != null) { // Check if there's a card in that position
+            return card.symbol; // Return symbol
         }else{
             return '?';
         }
+    }
+
+    int getGridWidth(){
+        return cardsGrid[0].length;
+    }
+
+    int getGridHeight(){
+        return cardsGrid.length;
     }
     
     //-------------------PRINT METHODS---------------------------
@@ -263,11 +271,5 @@ public class Grid {
         System.out.println();
     }
 
-    int getGridWidth(){
-        return cardsGrid[0].length;
-    }
-
-    int getGridHeight(){
-        return cardsGrid.length;
-    }
+    
 }

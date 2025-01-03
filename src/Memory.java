@@ -40,16 +40,14 @@ public class Memory {
 
         //Ask for grid dimension
         gDimension = gameUI.getGridDimensions();
-        
-        grid = new Grid(gDimension[0], gDimension[1]); 
-        grid.print();
 
         gameUI.clearScreen();
-
-        grid.print();
         
+        grid = new Grid(gDimension[0], gDimension[1]); 
 
-        Game gamePlay = new Game(players, grid, gameUI);        
+        Game gamePlay = new Game(players, grid, gameUI);  
+        
+        
 
         // Ciclo while per la durata del gioco
         do {
