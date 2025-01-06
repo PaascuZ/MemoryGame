@@ -2,6 +2,33 @@ import java.io.IOException;
 import java.util.Scanner;
 import java.lang.Math;
 
+enum TitleColor {
+    //Color end string, color reset
+    RESET("\033[0m"),
+
+    // Bold
+    BLACK_BOLD("\033[1;30m"),   // BLACK
+    RED_BOLD("\033[1;31m"),     // RED
+    GREEN_BOLD("\033[1;32m"),   // GREEN
+    YELLOW_BOLD("\033[1;33m"),  // YELLOW
+    BLUE_BOLD("\033[1;34m"),    // BLUE
+    MAGENTA_BOLD("\033[1;35m"), // MAGENTA
+    CYAN_BOLD("\033[1;36m"),    // CYAN
+    WHITE_BOLD("\033[1;37m");   // WHITE
+
+
+    String code="";
+
+    TitleColor(String code) {
+        this.code = code;
+    }
+
+    public String toString() {
+        return code;
+    }
+
+}
+
 public class ConsoleInteractionUtils {
     Scanner scanner = new Scanner(System.in);
 
@@ -19,8 +46,10 @@ public class ConsoleInteractionUtils {
             System.out.print("Please enter a number between " + min + " and " + max + ": ");
             if (scanner.hasNextInt()) {
                 input = scanner.nextInt();
-                if (input < min || input > max)
+                if (input < min || input > max){
                     System.out.println("Error: number not in range.");
+                    emptyTheScanner();
+                }                    
                 else
                     correctInput = true;
             } else {
@@ -63,7 +92,7 @@ public class ConsoleInteractionUtils {
 
     /**
      * Method: getGridDimensions
-     * Description: Used to get the dimension of the game grid, checkin input valuse
+     * Description: Used to get the dimension of the game grid, checking input values
      *              and returning an array of integers
      * @return
      */
@@ -152,18 +181,25 @@ public class ConsoleInteractionUtils {
         return players;
     }
 
-    void printMenu(){
+    void printMenu() {
+        // ASCII Art for the menu
         String[] art = {
-            "     __  ___                       ",
-            "    /  |/  /__ __ _  ___  ______ __",
-            "   / /|_/ / -_)  ' \\/ _ \\/ __/ // /",
-            "  /_/  /_/\\__/_/_/_/\\___/_/  \\_, / ",
-            "                            /___/ "
+            " .----------------.  .----------------.  .----------------.  .----------------.  .----------------.  .----------------.",
+            "| .--------------. || .--------------. || .--------------. || .--------------. || .--------------. || .--------------. |",
+            "| |"+TitleColor.YELLOW_BOLD+" ____    ____ "+TitleColor.RESET+"| || |"+TitleColor.GREEN_BOLD+"  _________   "+TitleColor.RESET+"| || |"+TitleColor.RED_BOLD+" ____    ____ "+TitleColor.RESET+"| || |"+TitleColor.BLUE_BOLD+"     ____     "+TitleColor.RESET+"| || |"+TitleColor.CYAN_BOLD+"  _______     "+TitleColor.RESET+"| || |"+TitleColor.MAGENTA_BOLD+"  ____  ____  "+TitleColor.RESET+"| |",
+            "| |"+TitleColor.YELLOW_BOLD+"|_   \\  /   _|"+TitleColor.RESET+"| || |"+TitleColor.GREEN_BOLD+" |_   ___  |  "+TitleColor.RESET+"| || |"+TitleColor.RED_BOLD+"|_   \\  /   _|"+TitleColor.RESET+"| || |"+TitleColor.BLUE_BOLD+"   .'    `.   "+TitleColor.RESET+"| || |"+TitleColor.CYAN_BOLD+" |_   __ \\    "+TitleColor.RESET+"| || |"+TitleColor.MAGENTA_BOLD+" |_  _||_  _| "+TitleColor.RESET+"| |",
+            "| |"+TitleColor.YELLOW_BOLD+"  |   \\/   |  "+TitleColor.RESET+"| || |"+TitleColor.GREEN_BOLD+"   | |_  \\_|  "+TitleColor.RESET+"| || |"+TitleColor.RED_BOLD+"  |   \\/   |  "+TitleColor.RESET+"| || |"+TitleColor.BLUE_BOLD+"  /  .--.  \\  "+TitleColor.RESET+"| || |"+TitleColor.CYAN_BOLD+"   | |__) |   "+TitleColor.RESET+"| || |"+TitleColor.MAGENTA_BOLD+"   \\ \\  / /   "+TitleColor.RESET+"| |",
+            "| |"+TitleColor.YELLOW_BOLD+"  | |\\  /| |  "+TitleColor.RESET+"| || |"+TitleColor.GREEN_BOLD+"   |  _|  _   "+TitleColor.RESET+"| || |"+TitleColor.RED_BOLD+"  | |\\  /| |  "+TitleColor.RESET+"| || |"+TitleColor.BLUE_BOLD+"  | |    | |  "+TitleColor.RESET+"| || |"+TitleColor.CYAN_BOLD+"   |  __ /    "+TitleColor.RESET+"| || |"+TitleColor.MAGENTA_BOLD+"    \\ \\/ /    "+TitleColor.RESET+"| |",
+            "| |"+TitleColor.YELLOW_BOLD+" _| |_\\/ | |_ "+TitleColor.RESET+"| || |"+TitleColor.GREEN_BOLD+"  _| |___/ |  "+TitleColor.RESET+"| || |"+TitleColor.RED_BOLD+" _| |_\\/ | |_ "+TitleColor.RESET+"| || |"+TitleColor.BLUE_BOLD+"  \\  `--'  /  "+TitleColor.RESET+"| || |"+TitleColor.CYAN_BOLD+"  _| |  \\ \\_  "+TitleColor.RESET+"| || |"+TitleColor.MAGENTA_BOLD+"    _|  |_    "+TitleColor.RESET+"| |",
+            "| |"+TitleColor.YELLOW_BOLD+"|_____||_____|"+TitleColor.RESET+"| || |"+TitleColor.GREEN_BOLD+" |_________|  "+TitleColor.RESET+"| || |"+TitleColor.RED_BOLD+"|_____||_____|"+TitleColor.RESET+"| || |"+TitleColor.BLUE_BOLD+"   `.____.'   "+TitleColor.RESET+"| || |"+TitleColor.CYAN_BOLD+" |____| |___| "+TitleColor.RESET+"| || |"+TitleColor.MAGENTA_BOLD+"   |______|   "+TitleColor.RESET+"| |",
+            "| |              | || |              | || |              | || |              | || |              | || |              | |",
+            "| '--------------' || '--------------' || '--------------' || '--------------' || '--------------' || '--------------' |",
+            " '----------------'  '----------------'  '----------------'  '----------------'  '----------------'  '----------------'"
         };
-
+    
         // Print the menu
         System.out.println("\n\n");
-        // Print the ASCII
+        // Print the ASCII art
         for (String line : art) {
             System.out.println(line);
         }
@@ -171,6 +207,7 @@ public class ConsoleInteractionUtils {
         System.out.println("     Press ENTER key to begin");
         System.out.println("\n\n");
     }
+    
 
     /**
      * Method: clearScreen
